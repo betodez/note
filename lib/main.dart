@@ -9,11 +9,13 @@ class NoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Registrar(),
-      ),
+      initialRoute: 'login',
+      routes: {
+        'login': (_) => const Login(),
+        'registrar': (_) => const Registrar(),
+      },
     );
   }
 }
