@@ -6,6 +6,7 @@ class TextFieldCustom extends StatelessWidget {
   final String? helperText;
   final String? errorText;
   final IconData? icon;
+  final bool obscureText;
 
   const TextFieldCustom({
     Key? key,
@@ -14,6 +15,7 @@ class TextFieldCustom extends StatelessWidget {
     this.labelText,
     this.helperText,
     this.errorText,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class TextFieldCustom extends StatelessWidget {
         helperText: helperText,
         errorText: errorText,
       ),
+      obscureText: obscureText,
     );
   }
 }

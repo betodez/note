@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/screens/login.dart';
+import 'package:note_app/screens/registrar.dart';
 
 void main() => runApp(const NoteApp());
 
@@ -11,7 +12,7 @@ class NoteApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Login(),
+        body: Registrar(),
       ),
     );
   }

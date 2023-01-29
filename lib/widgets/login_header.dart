@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
-  const LoginHeader({Key? key}) : super(key: key);
+  final String title;
+  const LoginHeader({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,11 @@ class LoginHeader extends StatelessWidget {
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(70),
               bottomRight: Radius.circular(70))),
-      child: const SafeArea(
+      child: SafeArea(
           child: Center(
               child: Text(
-        'Inicio de sesión',
-        style: TextStyle(fontSize: 50, color: Colors.white),
+        title,
+        style: const TextStyle(fontSize: 50, color: Colors.white),
       ))),
     );
   }
