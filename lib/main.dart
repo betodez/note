@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/blocks/registrar/registrar_bloc.dart';
 import 'package:note_app/screens/login.dart';
 import 'package:note_app/screens/registrar.dart';
 
@@ -9,13 +11,18 @@ class NoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
-      routes: {
-        'login': (_) => const Login(),
-        'registrar': (_) => const Registrar(),
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => RegistrarBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: 'login',
+        routes: {
+          'login': (_) => const Login(),
+          'registrar': (_) => const Registrar(),
+        },
+      ),
     );
   }
 }
