@@ -8,6 +8,11 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    final Map<String, String> formValues = {
+      'fullName': '',
+      'email': '',
+      'password': '',
+    };
     return Scaffold(
       body: Background(
           title: 'Inicio de sesión',

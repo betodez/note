@@ -7,15 +7,54 @@ abstract class RegistrarEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RegistrarUsuarioEvent extends RegistrarEvent {
-  final User user;
-  final String errorFullName;
-  final String errorEmail;
-  final String errorPassword;
+class ErrorRegistrarPasswordRepeatEvent extends RegistrarEvent {
+  final String error;
 
-  const RegistrarUsuarioEvent(
-      {required this.user,
-      required this.errorFullName,
-      required this.errorEmail,
-      required this.errorPassword});
+  const ErrorRegistrarPasswordRepeatEvent(this.error);
+}
+
+class ValidoRegistrarPasswordRepeatEvent extends RegistrarEvent {
+  const ValidoRegistrarPasswordRepeatEvent();
+}
+
+class ErrorRegistrarEmailEvent extends RegistrarEvent {
+  final String error;
+
+  const ErrorRegistrarEmailEvent(this.error);
+}
+
+class ValidoRegistrarEmailEvent extends RegistrarEvent {
+  const ValidoRegistrarEmailEvent();
+}
+
+class ErrorRegistrarNameEvent extends RegistrarEvent {
+  final String error;
+
+  const ErrorRegistrarNameEvent(this.error);
+}
+
+class ErrorRegistrarNameEmptyEvent extends RegistrarEvent {
+  final String error;
+
+  const ErrorRegistrarNameEmptyEvent(this.error);
+}
+
+class ValidoRegistrarNameEvent extends RegistrarEvent {
+  const ValidoRegistrarNameEvent();
+}
+
+class ErrorRegistrarPasswordEvent extends RegistrarEvent {
+  final String error;
+
+  const ErrorRegistrarPasswordEvent(this.error);
+}
+
+class ErrorRegistrarPasswordShortEvent extends RegistrarEvent {
+  final String error;
+
+  const ErrorRegistrarPasswordShortEvent(this.error);
+}
+
+class ValidoRegistrarPasswordEvent extends RegistrarEvent {
+  const ValidoRegistrarPasswordEvent();
 }

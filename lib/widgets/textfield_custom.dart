@@ -8,6 +8,8 @@ class TextFieldCustom extends StatelessWidget {
   final IconData? icon;
   final bool obscureText;
 
+  final String? Function(String? value)? fn;
+
   const TextFieldCustom({
     Key? key,
     this.icon,
@@ -16,19 +18,21 @@ class TextFieldCustom extends StatelessWidget {
     this.helperText,
     this.errorText,
     this.obscureText = false,
+    this.fn,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(
-        icon: Icon(icon),
-        hintText: hintText,
-        labelText: labelText,
-        helperText: helperText,
-        errorText: errorText,
-      ),
-      obscureText: obscureText,
-    );
+        decoration: InputDecoration(
+          icon: Icon(icon),
+          hintText: hintText,
+          labelText: labelText,
+          helperText: helperText,
+          errorText: errorText == '' ? null : errorText,
+        ),
+        obscureText: obscureText,
+        onChanged: fn //formValue[field] = value,
+        );
   }
 }

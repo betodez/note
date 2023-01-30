@@ -1,26 +1,32 @@
 part of 'registrar_bloc.dart';
 
-abstract class RegistrarState extends Equatable {
-  final User user;
+class RegistrarState extends Equatable {
   final String errorFullName;
   final String errorEmail;
   final String errorPassword;
+  final String errorRepetirPassword;
 
   const RegistrarState({
-    required this.user,
     required this.errorFullName,
     required this.errorEmail,
     required this.errorPassword,
+    required this.errorRepetirPassword,
   });
 
-  @override
-  List<Object> get props => [errorEmail, errorFullName, errorPassword, user];
-}
+  RegistrarState copyWith({
+    String? errorFullName,
+    String? errorEmail,
+    String? errorPassword,
+    String? errorRepetirPassword,
+  }) =>
+      RegistrarState(
+          errorEmail: errorEmail ?? this.errorEmail,
+          errorFullName: errorFullName ?? this.errorFullName,
+          errorPassword: errorPassword ?? this.errorPassword,
+          errorRepetirPassword:
+              errorRepetirPassword ?? this.errorRepetirPassword);
 
-class RegistrarSetState extends RegistrarState {
-  const RegistrarSetState(
-      {required super.user,
-      required super.errorFullName,
-      required super.errorEmail,
-      required super.errorPassword});
+  @override
+  List<Object> get props =>
+      [errorEmail, errorFullName, errorPassword, errorRepetirPassword];
 }
