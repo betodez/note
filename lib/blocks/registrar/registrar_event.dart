@@ -19,7 +19,6 @@ class ValidoRegistrarPasswordRepeatEvent extends RegistrarEvent {
 
 class ErrorRegistrarEmailEvent extends RegistrarEvent {
   final String error;
-
   const ErrorRegistrarEmailEvent(this.error);
 }
 

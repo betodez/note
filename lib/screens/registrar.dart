@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/blocks/registrar/registrar_bloc.dart';
+import 'package:note_app/controllers/registra_controller.dart';
 import 'package:note_app/widgets/backgroud.dart';
 import 'package:note_app/widgets/textfield_custom.dart';
-
-import 'controllers/registra_controller.dart';
 
 class Registrar extends StatelessWidget {
   const Registrar({Key? key}) : super(key: key);
@@ -86,7 +85,12 @@ class Registrar extends StatelessWidget {
                   ),
                   const SizedBox(height: separacion),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text('Registrase')),
+                      onPressed:
+                          !RegistrarController(context: context, bloc: bloc)
+                                  .botonActivo(formValues)
+                              ? null
+                              : () {},
+                      child: const Text('Registrase')),
                 ],
               ),
             ),

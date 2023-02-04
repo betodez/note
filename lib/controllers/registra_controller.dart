@@ -58,4 +58,15 @@ al menos un caracter no alfanumérico.'''));
     }
     return null;
   }
+
+  bool botonActivo(Map<String, String> usuario) {
+    return bloc.state.errorEmail == '' &&
+        bloc.state.errorFullName == '' &&
+        bloc.state.errorPassword == '' &&
+        bloc.state.errorRepetirPassword == '' &&
+        usuario['fullName'] != '' &&
+        usuario['email'] != '' &&
+        usuario['password'] != '' &&
+        usuario['repetirPassword'] != '';
+  }
 }
