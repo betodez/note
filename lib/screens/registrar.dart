@@ -16,13 +16,6 @@ class Registrar extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     RegistrarController controller = RegistrarController(context: context);
 
-    final Map<String, String> formValues = {
-      'fullName': '',
-      'email': '',
-      'password': '',
-      'repetirPassword': '',
-    };
-
     return Scaffold(
       body: BlocBuilder<RegistrarBloc, RegistrarState>(builder: (_, state) {
         return Background(
@@ -41,8 +34,8 @@ class Registrar extends StatelessWidget {
                     hintText: 'Juan López Pérez',
                     errorText: state.errorFullName,
                     fn: (value) {
-                      formValues['fullName'] = value ?? '';
-                      return controller.validarName(formValues['fullName']);
+                      controller.fullName(value);
+                      return controller.validarName(value);
                     },
                   ),
                   const SizedBox(height: separacion),
@@ -52,8 +45,8 @@ class Registrar extends StatelessWidget {
                     hintText: 'tunombre@gmail.com',
                     errorText: state.errorEmail,
                     fn: (value) {
-                      formValues['email'] = value ?? '';
-                      return controller.validarEmail(formValues['email']);
+                      controller.email(value);
+                      return controller.validarEmail(value);
                     },
                   ),
                   const SizedBox(height: separacion),
@@ -63,11 +56,9 @@ class Registrar extends StatelessWidget {
                     obscureText: true,
                     errorText: state.errorPassword,
                     fn: (value) {
-                      formValues['password'] = value ?? '';
-                      controller.validarPassword(formValues['password']);
-                      return controller.validarRepeatPassword(
-                          formValues['password'],
-                          formValues['repetirPassword']);
+                      controller.password(value);
+                      controller.validarPassword(value);
+                      return controller.validarRepeatPassword(password: value);
                     },
                   ),
                   const SizedBox(height: separacion),
@@ -77,18 +68,16 @@ class Registrar extends StatelessWidget {
                     obscureText: true,
                     errorText: state.errorRepetirPassword,
                     fn: (value) {
-                      formValues['repetirPassword'] = value ?? '';
+                      controller.repeatPassword(value);
                       return controller.validarRepeatPassword(
-                          formValues['password'],
-                          formValues['repetirPassword']);
+                          repeatPassword: value);
                     },
                   ),
                   const SizedBox(height: separacion),
                   ElevatedButton(
-                      onPressed: !controller.botonActivo(formValues)
+                      onPressed: !controller.botonActivo()
                           ? null
-                          : () => controller
-                              .registraUser(User.mapToUser(formValues)),
+                          : () => controller.registraUser(),
                       child: const Text('Registrase')),
                   SizedBox(height: 100, child: Text(state.message)),
                 ],

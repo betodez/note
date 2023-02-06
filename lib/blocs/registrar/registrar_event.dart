@@ -59,3 +59,23 @@ class RegistrarMessageEvent extends RegistrarEvent {
   final String message;
   const RegistrarMessageEvent(this.message);
 }
+
+class RegistrarFullNameEvent extends RegistrarEvent {
+  final String value;
+  const RegistrarFullNameEvent(this.value);
+}
+
+class RegistrarEmailEvent extends RegistrarEvent {
+  final String value;
+  const RegistrarEmailEvent(this.value);
+}
+
+class RegistrarPasswordEvent extends RegistrarEvent {
+  final String value;
+  const RegistrarPasswordEvent(this.value);
+}
+
+class RegistrarRepeatPasswordEvent extends RegistrarEvent {
+  final String value;
+  const RegistrarRepeatPasswordEvent(this.value);
+}

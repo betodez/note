@@ -12,6 +12,10 @@ class RegistrarBloc extends Bloc<RegistrarEvent, RegistrarState> {
           errorFullName: '',
           errorPassword: '',
           errorRepetirPassword: '',
+          email: '',
+          fullName: '',
+          password: '',
+          repeatPassword: '',
         )) {
     on<ErrorRegistrarPasswordRepeatEvent>((event, emit) => emit(
           state.copyWith(errorRepetirPassword: event.error),
@@ -45,6 +49,18 @@ class RegistrarBloc extends Bloc<RegistrarEvent, RegistrarState> {
         ));
     on<RegistrarMessageEvent>((event, emit) => emit(
           state.copyWith(message: event.message),
+        ));
+    on<RegistrarFullNameEvent>((event, emit) => emit(
+          state.copyWith(fullName: event.value),
+        ));
+    on<RegistrarEmailEvent>((event, emit) => emit(
+          state.copyWith(email: event.value),
+        ));
+    on<RegistrarPasswordEvent>((event, emit) => emit(
+          state.copyWith(password: event.value),
+        ));
+    on<RegistrarRepeatPasswordEvent>((event, emit) => emit(
+          state.copyWith(repeatPassword: event.value),
         ));
   }
 }

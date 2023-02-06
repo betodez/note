@@ -12,6 +12,13 @@ class RegistrarController {
   late final UserBloc userBloc;
   late final RegistrarBloc registrarBloc;
 
+  final Map<String, String> formValues = {
+    'fullName': '',
+    'email': '',
+    'password': '',
+    'repetirPassword': '',
+  };
+
   RegistrarController({
     required this.context,
   }) {
@@ -26,12 +33,13 @@ class RegistrarController {
     );
   }
 
-  String? validarRepeatPassword(String? password, String? repetirPassword) {
-    if (password != repetirPassword) {
+  String? validarRepeatPassword({password, repeatPassword}) {
+    if ((registrarBloc.state.password == repeatPassword) ||
+        (registrarBloc.state.repeatPassword == password)) {
+      registrarBloc.add(const ValidoRegistrarPasswordRepeatEvent());
+    } else {
       registrarBloc.add(const ErrorRegistrarPasswordRepeatEvent(
           'La contraseñas no son iguales'));
-    } else {
-      registrarBloc.add(const ValidoRegistrarPasswordRepeatEvent());
     }
     return null;
   }
@@ -73,18 +81,22 @@ al menos un caracter no alfanumérico.'''));
     return null;
   }
 
-  bool botonActivo(Map<String, String> usuario) {
+  bool botonActivo() {
     return registrarBloc.state.errorEmail == '' &&
         registrarBloc.state.errorFullName == '' &&
         registrarBloc.state.errorPassword == '' &&
         registrarBloc.state.errorRepetirPassword == '' &&
-        usuario['fullName'] != '' &&
-        usuario['email'] != '' &&
-        usuario['password'] != '' &&
-        usuario['repetirPassword'] != '';
+        registrarBloc.state.fullName != '' &&
+        registrarBloc.state.email != '' &&
+        registrarBloc.state.password != '';
   }
 
-  void registraUser(User user) async {
+  void registraUser() async {
+    User user = User(
+      fullName: registrarBloc.state.fullName,
+      email: registrarBloc.state.email,
+      password: registrarBloc.state.password,
+    );
     User? temp = await DBProvider.db.getUser(user.email);
     if (temp == null) {
       await DBProvider.db.addUser(user);
@@ -102,5 +114,21 @@ al menos un caracter no alfanumérico.'''));
         'El correo ya existe',
       ));
     }
+  }
+
+  void email(String? value) {
+    registrarBloc.add(RegistrarEmailEvent(value ?? ''));
+  }
+
+  void fullName(String? value) {
+    registrarBloc.add(RegistrarFullNameEvent(value ?? ''));
+  }
+
+  void password(String? value) {
+    registrarBloc.add(RegistrarPasswordEvent(value ?? ''));
+  }
+
+  void repeatPassword(String? value) {
+    registrarBloc.add(RegistrarRepeatPasswordEvent(value ?? ''));
   }
 }
