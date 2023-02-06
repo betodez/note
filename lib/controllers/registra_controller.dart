@@ -1,72 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/blocs/user/user_bloc.dart';
+import 'package:note_app/models/user.dart';
+import 'package:note_app/providers/db_provider.dart';
 
-import '../../blocks/registrar/registrar_bloc.dart';
+import '../../blocs/registrar/registrar_bloc.dart';
 import '../../utils/validador.dart';
 
 class RegistrarController {
   final BuildContext context;
-  final RegistrarBloc bloc;
+  late final UserBloc userBloc;
+  late final RegistrarBloc registrarBloc;
 
   RegistrarController({
     required this.context,
-    required this.bloc,
-  });
+  }) {
+    userBloc = BlocProvider.of<UserBloc>(
+      context,
+      listen: false,
+    );
+
+    registrarBloc = BlocProvider.of<RegistrarBloc>(
+      context,
+      listen: false,
+    );
+  }
 
   String? validarRepeatPassword(String? password, String? repetirPassword) {
     if (password != repetirPassword) {
-      bloc.add(const ErrorRegistrarPasswordRepeatEvent(
+      registrarBloc.add(const ErrorRegistrarPasswordRepeatEvent(
           'La contraseñas no son iguales'));
     } else {
-      bloc.add(const ValidoRegistrarPasswordRepeatEvent());
+      registrarBloc.add(const ValidoRegistrarPasswordRepeatEvent());
     }
     return null;
   }
 
   String? validarPassword(String? value) {
     if (!Validate(value ?? '').isPassword()) {
-      bloc.add(const ErrorRegistrarPasswordEvent('''
+      registrarBloc.add(const ErrorRegistrarPasswordEvent('''
 La contraseña debe al menos un dígito, 
 al menos una minúscula, 
 al menos una mayúscula y 
 al menos un caracter no alfanumérico.'''));
     } else if (value!.length < 8) {
-      bloc.add(const ErrorRegistrarPasswordShortEvent(
+      registrarBloc.add(const ErrorRegistrarPasswordShortEvent(
           'Debe tener al menos 8 caracteres'));
     } else {
-      bloc.add(const ValidoRegistrarPasswordEvent());
+      registrarBloc.add(const ValidoRegistrarPasswordEvent());
     }
     return null;
   }
 
   String? validarName(String? value) {
     if (!Validate(value ?? '').isName()) {
-      bloc.add(const ErrorRegistrarNameEvent('No se aceptan números'));
+      registrarBloc.add(const ErrorRegistrarNameEvent('No se aceptan números'));
     } else if (value!.isEmpty) {
-      bloc.add(const ErrorRegistrarNameEmptyEvent(
+      registrarBloc.add(const ErrorRegistrarNameEmptyEvent(
           'El Nombre no puede quedar vacío'));
     } else {
-      bloc.add(const ValidoRegistrarNameEvent());
+      registrarBloc.add(const ValidoRegistrarNameEvent());
     }
     return null;
   }
 
   String? validarEmail(String? value) {
     if (!Validate(value ?? '').isEmail()) {
-      bloc.add(const ErrorRegistrarEmailEvent('Correo no válido'));
+      registrarBloc.add(const ErrorRegistrarEmailEvent('Correo no válido'));
     } else {
-      bloc.add(const ValidoRegistrarEmailEvent());
+      registrarBloc.add(const ValidoRegistrarEmailEvent());
     }
     return null;
   }
 
   bool botonActivo(Map<String, String> usuario) {
-    return bloc.state.errorEmail == '' &&
-        bloc.state.errorFullName == '' &&
-        bloc.state.errorPassword == '' &&
-        bloc.state.errorRepetirPassword == '' &&
+    return registrarBloc.state.errorEmail == '' &&
+        registrarBloc.state.errorFullName == '' &&
+        registrarBloc.state.errorPassword == '' &&
+        registrarBloc.state.errorRepetirPassword == '' &&
         usuario['fullName'] != '' &&
         usuario['email'] != '' &&
         usuario['password'] != '' &&
         usuario['repetirPassword'] != '';
+  }
+
+  void registraUser(User user) async {
+    User? temp = await DBProvider.db.getUser(user.email);
+    if (temp == null) {
+      await DBProvider.db.addUser(user);
+      registrarBloc.add(const RegistrarMessageEvent(
+        '',
+      ));
+      userBloc.add(UserEmailEvent(
+        email: user.email,
+      ));
+      userBloc.add(UserFullNameEvent(
+        fullName: user.fullName,
+      ));
+    } else {
+      registrarBloc.add(const RegistrarMessageEvent(
+        'El correo ya existe',
+      ));
+    }
   }
 }

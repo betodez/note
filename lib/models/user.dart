@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 class User {
   final String fullName;
   final String email;
@@ -10,4 +8,10 @@ class User {
     required this.email,
     required this.password,
   });
+
+  static User mapToUser(Map<String, String> map) => User(
+        email: map['email'].toString(),
+        fullName: map['fullName'].toString(),
+        password: map['password'].toString(),
+      );
 }

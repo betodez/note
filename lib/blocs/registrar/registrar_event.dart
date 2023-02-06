@@ -28,13 +28,11 @@ class ValidoRegistrarEmailEvent extends RegistrarEvent {
 
 class ErrorRegistrarNameEvent extends RegistrarEvent {
   final String error;
-
   const ErrorRegistrarNameEvent(this.error);
 }
 
 class ErrorRegistrarNameEmptyEvent extends RegistrarEvent {
   final String error;
-
   const ErrorRegistrarNameEmptyEvent(this.error);
 }
 
@@ -50,10 +48,14 @@ class ErrorRegistrarPasswordEvent extends RegistrarEvent {
 
 class ErrorRegistrarPasswordShortEvent extends RegistrarEvent {
   final String error;
-
   const ErrorRegistrarPasswordShortEvent(this.error);
 }
 
 class ValidoRegistrarPasswordEvent extends RegistrarEvent {
   const ValidoRegistrarPasswordEvent();
+}
+
+class RegistrarMessageEvent extends RegistrarEvent {
+  final String message;
+  const RegistrarMessageEvent(this.message);
 }

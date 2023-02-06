@@ -33,6 +33,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.0.0
+  path: any
+  path_provider: ^2.0.12
   sqflite: ^2.2.4+1
 
 dev_dependencies:
