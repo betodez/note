@@ -72,9 +72,10 @@ class Login extends StatelessWidget {
                         ),
                         const SizedBox(
                           width: 10,
-                        )
+                        ),
                       ],
                     ),
+                    SizedBox(height: 100, child: Text(state.errMsg)),
                   ],
                 ),
               ),

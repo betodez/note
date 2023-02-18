@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/blocs/login/login_bloc.dart';
 import 'package:note_app/utils/validador.dart';
 
+import '../models/user.dart';
+import '../providers/db_provider.dart';
+
 class LoginController {
   final BuildContext context;
   late final LoginBloc bloc;
@@ -39,7 +42,14 @@ class LoginController {
         bloc.state.password != '';
   }
 
-  loginUser() {}
+  loginUser() async {
+    User? user = await DBProvider.db.getUser(bloc.state.email);
+    if (user != null && user.password == bloc.state.password) {
+      bloc.add(const LoginMsgEvent(msg: 'OK'));
+    } else {
+      bloc.add(const LoginMsgEvent(msg: 'Usuario invalido'));
+    }
+  }
 
   String? validarPassword(String value) {
     if (value.isEmpty) {
