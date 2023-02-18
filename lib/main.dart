@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/blocs/login/login_bloc.dart';
 import 'package:note_app/blocs/registrar/registrar_bloc.dart';
 import 'package:note_app/blocs/user/user_bloc.dart';
 import 'package:note_app/screens/login.dart';
@@ -16,6 +17,7 @@ class NoteApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => RegistrarBloc()),
         BlocProvider(create: (_) => UserBloc()),
+        BlocProvider(create: (_) => LoginBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
