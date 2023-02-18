@@ -3,17 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/blocs/login/login_bloc.dart';
 import 'package:note_app/utils/validador.dart';
 
+import '../blocs/user/user_bloc.dart';
 import '../models/user.dart';
 import '../providers/db_provider.dart';
 
 class LoginController {
   final BuildContext context;
   late final LoginBloc bloc;
+  late final UserBloc userBloc;
 
   LoginController({
     required this.context,
   }) {
     bloc = BlocProvider.of<LoginBloc>(
+      context,
+      listen: false,
+    );
+
+    userBloc = BlocProvider.of<UserBloc>(
       context,
       listen: false,
     );
@@ -45,6 +52,13 @@ class LoginController {
   loginUser() async {
     User? user = await DBProvider.db.getUser(bloc.state.email);
     if (user != null && user.password == bloc.state.password) {
+      userBloc.add(UserEmailEvent(
+        email: user.email,
+      ));
+      userBloc.add(UserFullNameEvent(
+        fullName: user.fullName,
+      ));
+
       Navigator.popAndPushNamed(context, 'notas');
     } else {
       bloc.add(const LoginMsgEvent(msg: 'Usuario invalido'));

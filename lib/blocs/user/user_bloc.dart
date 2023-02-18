@@ -10,11 +10,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           email: '',
           fullName: '',
         )) {
-    on<UserEmailEvent>((event, emit) => {
+    on<UserEmailEvent>((event, emit) => emit(
           state.copyWith(email: event.email),
-        });
-    on<UserFullNameEvent>((event, emit) => {
+        ));
+    on<UserFullNameEvent>((event, emit) => emit(
           state.copyWith(fullName: event.fullName),
-        });
+        ));
   }
 }

@@ -103,13 +103,15 @@ al menos un caracter no alfanumérico.'''));
       registrarBloc.add(const RegistrarMessageEvent(
         '',
       ));
-      Navigator.popAndPushNamed(context, 'notas');
+
       userBloc.add(UserEmailEvent(
         email: user.email,
       ));
       userBloc.add(UserFullNameEvent(
         fullName: user.fullName,
       ));
+
+      Navigator.popAndPushNamed(context, 'notas');
     } else {
       registrarBloc.add(const RegistrarMessageEvent(
         'El correo ya existe',
