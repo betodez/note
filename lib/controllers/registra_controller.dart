@@ -103,6 +103,7 @@ al menos un caracter no alfanumérico.'''));
       registrarBloc.add(const RegistrarMessageEvent(
         '',
       ));
+      Navigator.popAndPushNamed(context, 'notas');
       userBloc.add(UserEmailEvent(
         email: user.email,
       ));

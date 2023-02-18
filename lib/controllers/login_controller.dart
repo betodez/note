@@ -45,7 +45,7 @@ class LoginController {
   loginUser() async {
     User? user = await DBProvider.db.getUser(bloc.state.email);
     if (user != null && user.password == bloc.state.password) {
-      bloc.add(const LoginMsgEvent(msg: 'OK'));
+      Navigator.popAndPushNamed(context, 'notas');
     } else {
       bloc.add(const LoginMsgEvent(msg: 'Usuario invalido'));
     }

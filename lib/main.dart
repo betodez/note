@@ -4,6 +4,7 @@ import 'package:note_app/blocs/login/login_bloc.dart';
 import 'package:note_app/blocs/registrar/registrar_bloc.dart';
 import 'package:note_app/blocs/user/user_bloc.dart';
 import 'package:note_app/screens/login.dart';
+import 'package:note_app/screens/notas.dart';
 import 'package:note_app/screens/registrar.dart';
 
 void main() => runApp(const NoteApp());
@@ -25,6 +26,7 @@ class NoteApp extends StatelessWidget {
         routes: {
           'login': (_) => const Login(),
           'registrar': (_) => const Registrar(),
+          'notas': (_) => const Notas(),
         },
       ),
     );
