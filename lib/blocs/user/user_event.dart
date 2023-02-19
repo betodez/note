@@ -15,3 +15,13 @@ class UserEmailEvent extends UserEvent {
   final String email;
   const UserEmailEvent({required this.email});
 }
+
+class UserAddNotaEvent extends UserEvent {
+  final Nota nota;
+  const UserAddNotaEvent({required this.nota});
+}
+
+class UserDeleteNotaEvent extends UserEvent {
+  final Nota nota;
+  const UserDeleteNotaEvent({required this.nota});
+}

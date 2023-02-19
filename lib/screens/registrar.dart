@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/blocs/registrar/registrar_bloc.dart';
-import 'package:note_app/blocs/user/user_bloc.dart';
 import 'package:note_app/controllers/registra_controller.dart';
-import 'package:note_app/models/user.dart';
 import 'package:note_app/widgets/backgroud.dart';
 import 'package:note_app/widgets/textfield_custom.dart';
 

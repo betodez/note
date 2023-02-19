@@ -38,13 +38,13 @@ class Notas extends StatelessWidget {
                 SingleChildScrollView(
                   child: Column(children: [
                     const SizedBox(height: 10),
-                    ItemNota(
+                    ...state.lstNotas.map((nota) => ItemNota(
                         nota: Nota(
                           email: state.email,
-                          id: 1,
-                          text: 'Nota de ejemplo',
+                          id: nota.id,
+                          text: nota.text,
                         ),
-                        fn: (int id) {}),
+                        fn: (int id) {})),
                   ]),
                 ),
               ],

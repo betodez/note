@@ -6,6 +6,7 @@ import 'package:note_app/providers/db_provider.dart';
 
 import '../../blocs/registrar/registrar_bloc.dart';
 import '../../utils/validador.dart';
+import '../models/nota.dart';
 
 class RegistrarController {
   final BuildContext context;
@@ -104,14 +105,21 @@ al menos un caracter no alfanumérico.'''));
         '',
       ));
 
+      List<Nota> lista = await DBProvider.db.getNotes(user.email);
+
+      for (Nota item in lista) {
+        userBloc.add(UserAddNotaEvent(nota: item));
+      }
+
       userBloc.add(UserEmailEvent(
         email: user.email,
       ));
       userBloc.add(UserFullNameEvent(
         fullName: user.fullName,
       ));
-
-      Navigator.popAndPushNamed(context, 'notas');
+      if (context.mounted) {
+        Navigator.popAndPushNamed(context, 'notas');
+      }
     } else {
       registrarBloc.add(const RegistrarMessageEvent(
         'El correo ya existe',

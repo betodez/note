@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:note_app/models/nota.dart';
 import 'package:path/path.dart';
 import 'package:note_app/models/user.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,18 +21,30 @@ class DBProvider {
   Future<Database> initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentDirectory.path, 'NoteDB.db');
-    print(path);
 
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute('''
+    return await openDatabase(
+      path,
+      version: 4,
+      onOpen: (db) {},
+      onCreate: (Database db, int version) async {
+        await db.execute('''
         CREATE TABLE Users(
           email TEXT PRIMARY KEY,
           pass TEXT,
           fullName TEXT
         )
       ''');
-    });
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        await db.execute('''
+        CREATE TABLE Notes(
+          id INTEGER PRIMARY KEY,
+          email TEXT,
+          content TEXT
+        )
+      ''');
+      },
+    );
   }
 
   Future<int?> addUser(User user) async {
@@ -60,5 +73,35 @@ class DBProvider {
             fullName: res.first['fullName'].toString(),
             password: res.first['pass'].toString())
         : null;
+  }
+
+  Future<int?> addNote(Nota nota) async {
+    final email = nota.email;
+    final contenido = nota.text;
+
+    final db = await database;
+
+    final res = await db?.rawInsert('''
+      INSERT INTO Notes(email, content)
+      VALUES('$email', '$contenido')
+    ''');
+
+    return res;
+  }
+
+  Future<List<Nota>> getNotes(String email) async {
+    final db = await database;
+    List<Nota> list = [];
+    final res =
+        await db?.query('Notes', where: 'email = ?', whereArgs: [email]);
+
+    for (var row in res!) {
+      list.add(Nota(
+        id: int.parse(row['id'].toString()),
+        email: row['email'].toString(),
+        text: row['content'].toString(),
+      ));
+    }
+    return list;
   }
 }
