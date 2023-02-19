@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/models/nota.dart';
+import 'package:note_app/controllers/nota_controller.dart';
 import 'package:note_app/widgets/textfield_custom.dart';
 
 import '../blocs/user/user_bloc.dart';
@@ -11,6 +11,7 @@ class Notas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NotaController controller = NotaController(context: context);
     return BlocBuilder<UserBloc, UserState>(
       builder: (_, state) {
         return Scaffold(
@@ -28,27 +29,31 @@ class Notas extends StatelessWidget {
           ),
           body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: [
-                const TextFieldCustom(
-                  icon: Icons.note,
+            child: Column(children: [
+              TextFieldCustom(
+                icon: Icons.note,
+                fn: (value) {
+                  controller.addContenido(value ?? '');
+                  return null;
+                },
+              ),
+              ElevatedButton(
+                  onPressed: state.contenido.trim().isNotEmpty
+                      ? () => controller.addNote()
+                      : null,
+                  child: const Text('Agregar nota')),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  //physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.lstNotas.length,
+                  itemBuilder: (context, index) => ItemNota(
+                    nota: state.lstNotas[index],
+                    fn: (index) {},
+                  ),
                 ),
-                const ElevatedButton(
-                    onPressed: null, child: Text('Agregar nota')),
-                SingleChildScrollView(
-                  child: Column(children: [
-                    const SizedBox(height: 10),
-                    ...state.lstNotas.map((nota) => ItemNota(
-                        nota: Nota(
-                          email: state.email,
-                          id: nota.id,
-                          text: nota.text,
-                        ),
-                        fn: (int id) {})),
-                  ]),
-                ),
-              ],
-            ),
+              ),
+            ]),
           ),
         );
       },

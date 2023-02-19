@@ -24,15 +24,15 @@ class TextFieldCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        decoration: InputDecoration(
-          icon: Icon(icon),
-          hintText: hintText,
-          labelText: labelText,
-          helperText: helperText,
-          errorText: errorText == '' ? null : errorText,
-        ),
-        obscureText: obscureText,
-        onChanged: fn //formValue[field] = value,
-        );
+      decoration: InputDecoration(
+        icon: Icon(icon),
+        hintText: hintText,
+        labelText: labelText,
+        helperText: helperText,
+        errorText: errorText == '' ? null : errorText,
+      ),
+      obscureText: obscureText,
+      onChanged: fn,
+    );
   }
 }

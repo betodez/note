@@ -11,6 +11,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : super(const UserState(
           email: '',
           fullName: '',
+          contenido: '',
           lstNotas: [],
         )) {
     on<UserEmailEvent>((event, emit) => emit(
@@ -24,6 +25,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ));
     on<UserDeleteNotaEvent>((event, emit) => emit(
           state.removeNota(event.nota),
+        ));
+    on<UserContenidoEvent>((event, emit) => emit(
+          state.copyWith(contenido: event.value),
         ));
   }
 }

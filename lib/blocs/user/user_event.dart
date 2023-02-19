@@ -25,3 +25,8 @@ class UserDeleteNotaEvent extends UserEvent {
   final Nota nota;
   const UserDeleteNotaEvent({required this.nota});
 }
+
+class UserContenidoEvent extends UserEvent {
+  final String value;
+  const UserContenidoEvent({required this.value});
+}
