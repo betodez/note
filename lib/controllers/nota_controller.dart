@@ -27,6 +27,15 @@ class NotaController {
     userBloc.add(const UserContenidoEvent(value: ''));
   }
 
+  deleteNota(Nota nota) async {
+    await DBProvider.db.deleteNote(nota);
+    userBloc.add(UserDeleteNotaEvent(nota: nota));
+  }
+
+  clear() {
+    userBloc.add(const UserClearNotasEvent());
+  }
+
   void addContenido(String value) {
     userBloc.add(UserContenidoEvent(value: value));
   }

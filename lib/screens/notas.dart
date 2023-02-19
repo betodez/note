@@ -22,6 +22,7 @@ class Notas extends StatelessWidget {
                 icon: const Icon(Icons.exit_to_app),
                 tooltip: 'Salir',
                 onPressed: () {
+                  controller.clear();
                   Navigator.popAndPushNamed(context, 'login');
                 },
               ),
@@ -45,11 +46,13 @@ class Notas extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  //physics: const NeverScrollableScrollPhysics(),
                   itemCount: state.lstNotas.length,
                   itemBuilder: (context, index) => ItemNota(
+                    posicion: index,
                     nota: state.lstNotas[index],
-                    fn: (index) {},
+                    fn: (index) {
+                      controller.deleteNota(state.lstNotas[index]);
+                    },
                   ),
                 ),
               ),

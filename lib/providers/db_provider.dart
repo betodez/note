@@ -104,4 +104,15 @@ class DBProvider {
     }
     return list;
   }
+
+  Future<int?> deleteNote(Nota nota) async {
+    final db = await database;
+
+    final res = await db?.rawDelete('''
+      DELETE FROM Notes
+      WHERE id = ${nota.id}
+    ''');
+
+    return res;
+  }
 }

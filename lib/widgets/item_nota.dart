@@ -4,17 +4,22 @@ import '../models/nota.dart';
 
 class ItemNota extends StatelessWidget {
   final Nota nota;
+  final int posicion;
 
   final Function(int id) fn;
 
-  const ItemNota({super.key, required this.nota, required this.fn});
+  const ItemNota(
+      {super.key,
+      required this.nota,
+      required this.posicion,
+      required this.fn});
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
       direction: DismissDirection.endToStart,
-      onDismissed: (direccion) => fn(nota.id),
+      onDismissed: (direccion) => fn(posicion),
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,

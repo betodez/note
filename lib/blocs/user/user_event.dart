@@ -30,3 +30,7 @@ class UserContenidoEvent extends UserEvent {
   final String value;
   const UserContenidoEvent({required this.value});
 }
+
+class UserClearNotasEvent extends UserEvent {
+  const UserClearNotasEvent();
+}

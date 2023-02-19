@@ -29,5 +29,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserContenidoEvent>((event, emit) => emit(
           state.copyWith(contenido: event.value),
         ));
+    on<UserClearNotasEvent>((event, emit) => emit(
+          state.clearNota(),
+        ));
   }
 }

@@ -35,6 +35,15 @@ class UserState extends Equatable {
         lstNotas: lstNotas);
   }
 
+  UserState clearNota() {
+    return UserState(
+      contenido: contenido,
+      fullName: fullName,
+      email: email,
+      lstNotas: const [],
+    );
+  }
+
   @override
   List<Object> get props => [fullName, email, lstNotas, contenido];
 }
